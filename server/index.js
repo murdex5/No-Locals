@@ -25,7 +25,7 @@ app.get('/test', (req, res) => {
 });
 
 
-app.get('/api/businesses', async (req, res) => {
+app.get('/businesses', async (req, res) => {
   try {
     const [rows] = await db.query('SELECT * FROM businesses');
     res.json(rows);
