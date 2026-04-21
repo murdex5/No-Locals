@@ -23,7 +23,7 @@ app.get('/api/businessses', async (req, res) => {
   try {
     const [rows] = await db.query('SELECT * FROM businesses');
     res.json(rows);
-  } catch (err) {
+  } catch {
     res.status(500).json({ error: "Database connection failed"});
   }
 });

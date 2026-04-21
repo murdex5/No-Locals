@@ -12,10 +12,7 @@ export default [
     },
     rules: {
       // The rule to ignore variables/args starting with _
-      "no-unused-vars": ["error", { 
-        "argsIgnorePattern": "^_", 
-        "varsIgnorePattern": "^_" 
-      }],
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }]
     },
   },
 ];
