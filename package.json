@@ -18,6 +18,7 @@
     "test": "npm test -w client && npm test -w server"
   },
   "dependencies": {
+    "cors": "^2.8.6",
     "mysql2": "^3.22.2"
   }
 }
