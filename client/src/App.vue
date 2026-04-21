@@ -1,16 +1,23 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from 'vue';
 
-const serverMessage = ref('Loading...')
+const serverMessage = ref('Loading...');
+const businesses = ref([]);
 
 onMounted(async () => {
   try {
     // /api/test redirects to http://localhost:3000/test
-    const response = await fetch('/api/test')
-    const data = await response.json()
-    serverMessage.value = data.message
+    const response = await fetch('/api/test');
+    const data = await response.json();
+    serverMessage.value = data.message;
+
+    // Businness
+    const bizzResponse = await fetch('/api/businesses');
+    const bizzData = await bizzResponse.json();
+    businesses.value = bizzData;
+    
   } catch (error) {
-    serverMessage.value = "Server is offline ❌"
+    serverMessage.value = "Server is offline ❌";
   }
 })
 </script>
