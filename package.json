@@ -1,23 +1,20 @@
 {
   "name": "no-locals",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www",
-    "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 0"
-  },
-  "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "morgan": "~1.9.1"
-  },
+  "version": "1.0.0",
+  "type": "module", 
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "concurrently": "^9.2.1",
     "eslint": "^10.2.1",
     "globals": "^17.5.0"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
+    "lint": "eslint .",
+    "test": "npm test -w client && npm test -w server"
   }
 }
