@@ -14,4 +14,14 @@ export default defineConfig([
       }
     } 
   },
+  js.configs.recommended,
+    {
+        rules: {
+            // This tells ESLint to ignore variables starting with "_"
+            "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+            
+            // Or, if you want to completely hide the error for now:
+            // "no-unused-vars": "off" 
+        }
+    }
 ]);
