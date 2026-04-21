@@ -14,6 +14,7 @@
   },
   "scripts": {
     "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "npm test -w client && npm test -w server"
   }
 }
