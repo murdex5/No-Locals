@@ -1,0 +1,22 @@
+{
+  "name": "no-locals",
+  "version": "1.0.0",
+  "description": "No Locals is a website that helps locals to point out restuarants, hotels or accomadatons that does not serve locals.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/murdex5/No-Locals.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/murdex5/No-Locals/issues"
+  },
+  "homepage": "https://github.com/murdex5/No-Locals#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
