@@ -33,10 +33,22 @@ onMounted(async () => {
       <h2>Flagged Businesses</h2>
       <p>Search for Businesses that had or have "No Locals" policies.</p>
     </section>
+
+    <section class="business-list">
+      <div v-if="businesses.length > 0">
+        <div v-for="biz in businesses" :key="biz.id" class="business-card">
+          <h3>{{ biz.name }}</h3>
+          <p><strong>Category:</strong> {{ biz.category }}</p>
+        </div>
+      </div>
+      <p v-else-if="serverMessage !== 'Server is offline ❌'">Searching for records...</p>
+    </section>
+
     <div class="body">
       <h4>Connection Status:</h4>
       <p>{{ serverMessage }}</p>
     </div>
+
     <footer>
       <p>&copy; 2026 No-Locals</p>
     </footer>
