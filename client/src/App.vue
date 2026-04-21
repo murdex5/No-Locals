@@ -1,12 +1,18 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
-const count = ref(0)
+const serverMessage = ref('Loading...')
 
-// You can also add functions easily here
-const increment = () => {
-  count.value++
-}
+onMounted(async () => {
+  try {
+    // /api/test redirects to http://localhost:3000/test
+    const response = await fetch('/api/test')
+    const data = await response.json()
+    serverMessage.value = data.message
+  } catch (error) {
+    serverMessage.value = "Server is offline ❌"
+  }
+})
 </script>
 
 <template>
@@ -20,7 +26,10 @@ const increment = () => {
       <h2>Flagged Businesses</h2>
       <p>Search for Businesses that had or have "No Locals" policies.</p>
     </section>
-
+    <div class="body">
+      <h4>Connection Status:</h4>
+      <p>{{ serverMessage }}</p>
+    </div>
     <footer>
       <p>&copy; 2026 No-Locals</p>
     </footer>
@@ -34,19 +43,23 @@ const increment = () => {
     padding: 2rem;
     background-color: #f8f9fa;
     border-bottom: 2px solid #e9ecef;
+    font-family: sans-serif;
   }
 
   h1 {
+    font-family: sans-serif;
     color: #2c3e50;
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
   }
 
   h2 {
+    font-family: sans-serif;
     color: #42b983;
   }
 
   main {
+    font-family: sans-serif;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;

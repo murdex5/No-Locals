@@ -1,17 +1,29 @@
 import express from 'express';
-import cors from 'cors';
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
-const PORT = 3000;
 
-// Allow the Vue app to talk to this server
-app.use(cors());
-app.use(express.json());
+const db = mysql.createPool({
+  host:'localhost',
+  user: 'root',
+  password: process.env.DB_PASSWORD,
+  database: 'no_locals_db'
+})
 
-app.get('/api', (req, res) => {
-  res.json({ message: "Backend is alive!" });
+app.get('/test', (req, res) => {
+  res.json({ message: "Hello from the No-Locals Server!" });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+app.listen(3000, () => console.log('Backend running on port 3000'));
+
+app.get('/api/businessses', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM businesses');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: "Database connection failed"});
+  }
 });

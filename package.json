@@ -1,7 +1,7 @@
 {
   "name": "no-locals",
   "version": "1.0.0",
-  "type": "module", 
+  "type": "module",
   "workspaces": [
     "client",
     "server"
@@ -16,5 +16,8 @@
     "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
     "lint": "eslint .",
     "test": "npm test -w client && npm test -w server"
+  },
+  "dependencies": {
+    "mysql2": "^3.22.2"
   }
 }
