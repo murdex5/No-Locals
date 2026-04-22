@@ -1,48 +1,71 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import MainLayout from '@/layouts/MainLayout.vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const id = route.params.id;
+
+const business = ref(null);
+const loading = ref(true);
+
+onMounted(async () => {
+    try {
+        const response = await fetch(`/api/business/${id}`);
+        if (!response.ok) throw new Error(`Business not found`);
+
+        business.value = await response.json();
+    } catch (error) {
+        console.error("Error fetching businesses.", error);
+    } finally {
+        loading.value = false
+    }
+});
 </script>
 
 <template>
   <MainLayout>
-    <section class="hero detail-hero">
-      <div class="hero-content">
-        <div class="title-area">
-          <h2>Schokoladenherz</h2>
-          <div class="rating-row">
-            <span class="stars">★★★★★</span>
-            <span class="rating-value">4.5</span>
-            <span class="review-count">(128 Reviews)</span>
+    <div v-if="loading" class="status-box">Loading business details...</div>
+
+    <div v-else-if="business">
+      <section class="hero detail-hero">
+        <div class="hero-content">
+          <div class="title-area">
+            <h2>{{ business.name }}</h2>
+            <div class="rating-row">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">{{ business.rating || 'N/A' }}</span>
+              <span class="category-badge">{{ business.category }}</span>
+            </div>
+          </div>
+          <div class="status-badge flagged">
+              <span class="warning-icon">⚠️</span> Local Alert
           </div>
         </div>
-        <div class="status-badge flagged">
-            <span class="warning-icon">⚠️</span> Local Alert
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <div class="business-layout">
-      <div class="biss-image">
-        <img src="../assets/schokoladenherz.jpg" alt="Schokoladenherz interior">
-        <div class="image-overlay">View all photos</div>
-      </div>
-
-      <div class="business-info">
-        <div class="business-description">
-          <h3>About this business</h3>
-          <p>
-            A cozy spot known for artisanal chocolates and seasonal treats. 
-            While highly rated for quality, this establishment has been noted 
-            for its inconsistent local entry policy during tourist surges.
-          </p>
+      <div class="business-layout">
+        <div class="biss-image">
+          <img :src="business.image_url" :alt="business.name">
         </div>
 
-        <div class="flagged-box">
-          <h4>Community Report</h4>
-          <p>This business has been reported by local residents for refusing entry or priority seating during high seasons.</p>
-          <button class="report-btn">Submit updated info</button>
+        <div class="business-info">
+          <div class="business-description">
+            <h3>About this business</h3>
+            <p>{{ business.description || 'No description available yet.' }}</p>
+            <p class="location-text">📍 {{ business.location }}</p>
+          </div>
+          
+          <div class="flagged-box">
+             <h4>Community Report</h4>
+             <p>This business in {{ business.location }} has been flagged for its "No Locals" policy.</p>
+          </div>
         </div>
       </div>
+    </div>
+
+    <div v-else class="status-box">
+      <h2>Business not found.</h2>
     </div>
   </MainLayout>
 </template>

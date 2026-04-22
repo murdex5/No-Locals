@@ -16,10 +16,10 @@ const routes = [
         component: About
     },
     {
-        path: '/business',
+        path: '/business/:id',
         name: 'BUsiness',
         component: Business
-    }
+    },
 ]
 
 const router = createRouter({
