@@ -1,7 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router'
 
-// If App is undefined here, the page stays blank
-console.log('Vue is starting...', App); 
+const app = createApp(App)
 
-createApp(App).mount('#app')
+app.use(router)
+app.mount('#app')

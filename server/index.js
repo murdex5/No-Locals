@@ -8,10 +8,10 @@ dotenv.config();
 const app = express();
 
 const db = mysql.createPool({
-  host:'localhost',
-  user: 'no_locals',
-  password: process.env.DB_PASSWORD,
-  database: 'no_locals_db',
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_DB_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
@@ -34,5 +34,7 @@ app.get('/businesses', async (req, res) => {
     res.status(500).json({ error: "Database query failed" });
   }
 });
+
+
 
 app.listen(3000, () => console.log('Backend running on http://localhost:3000'));
