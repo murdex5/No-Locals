@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/test', (req, res) => {
-  res.json({ message: "Hello from the No-Locals Server!" });
+  res.json({ message: "Server is online!" });
 });
 
 
