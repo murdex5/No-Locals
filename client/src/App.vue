@@ -24,8 +24,8 @@ onMounted(async () => {
 
 <template>
   <header>
-    <h1>No Locals</h1>
-    <p>Businesses that value locals no matter the seasons</p>
+    <h1>No Locals?</h1>
+    <p>Help people find businesses that value locals no matter the seasons</p>
   </header>
 
   <main>
