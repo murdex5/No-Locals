@@ -194,4 +194,26 @@ onMounted(async () => {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
+  .business-list > div {
+    align-items: stretch;
+  }
+
+  .business-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .business-card p {
+    flex-grow: 1;
+    line-height: 1.5;
+  }
+
+  strong {
+    text-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+  }
+
+  .status-box {
+    border-left: 4px solid var(--accent);
+  }
 </style>
