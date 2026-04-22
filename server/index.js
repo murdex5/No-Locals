@@ -40,15 +40,12 @@ app.get('/business/:id', async (req, res) => {
   const sql = "SELECT * FROM businesses WHERE id = ?";
 
   try {
-    // Since you use mysql2/promise, you MUST use await here
     const [rows] = await db.query(sql, [businessId]);
 
-    // Check if the array is empty
     if (rows.length === 0) {
       return res.status(404).json({ message: "Business not found" });
     }
 
-    // Send the first result
     res.json(rows[0]);
   } catch (err) {
     console.error("Database Error:", err);
