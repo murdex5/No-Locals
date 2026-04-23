@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import MainLayout from '@/layouts/MainLayout.vue';
+import { useRouter } from 'vue-router';
 
 const serverMessage = ref('Loading...');
 const businesses = ref([]);
@@ -15,6 +16,7 @@ onMounted(async () => {
     serverMessage.value = "Server is offline ❌";
   }
 })
+
 </script>
 
 <template>
@@ -34,6 +36,9 @@ onMounted(async () => {
         </div>
       </div>
       <p v-else-if="serverMessage !== 'Server is offline ❌'">Searching for records...</p>
+      <router-link :to="'/post/business'">
+      <h2>Post</h2>
+      </router-link>
     </section>
   </MainLayout>
 </template>

@@ -1,9 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import MainLayout from '@/layouts/MainLayout.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
+const router = useRouter();
 const id = route.params.id;
 
 const business = ref(null);
@@ -32,7 +33,7 @@ async function deleteBusiness(id){
     
     if (!res.ok) throw new Error(data.error);
     console.log('Deleted:', data.message);
-    route.push('/');
+    router.push('/');
   } catch (err){
     console.error('Delete failed:', err.message);
   }
@@ -70,8 +71,8 @@ async function deleteBusiness(id){
             <h3>About this business</h3>
             <p>{{ business.description || 'No description available yet.' }}</p>
             <p class="location-text">📍 {{ business.location }}</p>
-          </div>
             <button @click="deleteBusiness(business.id)">Delete</button>
+          </div>
           <div class="flagged-box">
              <h4>Community Report</h4>
              <p>This business in {{ business.location }} has been flagged for its "No Locals" policy.</p>
