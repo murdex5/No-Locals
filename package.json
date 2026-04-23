@@ -10,7 +10,8 @@
     "@eslint/js": "^10.0.1",
     "concurrently": "^9.2.1",
     "eslint": "^10.2.1",
-    "globals": "^17.5.0"
+    "globals": "^17.5.0",
+    "supertest": "^7.2.2"
   },
   "scripts": {
     "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
