@@ -10,9 +10,11 @@
     "@eslint/js": "^10.0.1",
     "concurrently": "^9.2.1",
     "eslint": "^10.2.1",
-    "globals": "^17.5.0"
+    "globals": "^17.5.0",
+    "supertest": "^7.2.2"
   },
   "scripts": {
+    "start": "concurrently \"npm run start -w server\" \"npm run dev -w client\"",
     "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
     "lint": "eslint .",
     "test": "npm test -w client && npm test -w server"

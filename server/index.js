@@ -17,4 +17,4 @@ app.get('/test', (req, res) => {
 app.use('/businesses', businessesRoutes);
 app.use('/users', userRoutes);
 
-app.listen(3000, () => console.log('Backend running on http://localhost:3000'));
+export default app;

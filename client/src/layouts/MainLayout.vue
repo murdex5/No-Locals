@@ -1,10 +1,29 @@
+<script setup>
+import { useUser } from '@/composables/useUser';
+import { useRouter } from 'vue-router';
+
+const { isLoggedIn, username, logout } = useUser();
+const router = useRouter();
+
+const handleLogout = () => {
+  logout();
+  router.push('/');
+};
+</script>
 
 <template>
   <div class="layout">
     <header>
-      <router-link :to="'/'" >
-        <h1>No Locals?</h1>
-      </router-link>
+      <div class="header-top">
+        <router-link :to="'/'">
+          <h1>No Locals?</h1>
+        </router-link>
+        <div class="user-section">
+          <span v-if="isLoggedIn" class="username">👤 {{ username }}</span>
+          <button v-if="isLoggedIn" @click="handleLogout" class="logout-btn">Logout</button>
+          <router-link v-else to="/login" class="login-link">Login</router-link>
+        </div>
+      </div>
       <p>Help people find businesses that value locals no matter the seasons</p>
     </header>
 
@@ -46,17 +65,52 @@
     pointer-events: none;
   }
 
-  header h1,
-  header p {
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
     position: relative;
     z-index: 1;
   }
 
-  header p {
-    margin: 0.75rem auto 0;
-    max-width: 56ch;
-    color: var(--text-secondary);
-    font-size: 1.05rem;
+  .user-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .username {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .logout-btn {
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+
+  .logout-btn:hover {
+    background: var(--accent-hover);
+  }
+
+  .login-link {
+    padding: 0.5rem 1rem;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    transition: 0.3s;
+  }
+
+  .login-link:hover {
+    background: rgba(0, 217, 255, 0.1);
   }
 
   h1 {
@@ -71,6 +125,14 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  header p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    position: relative;
+    z-index: 1;
   }
 
   main {
@@ -99,7 +161,12 @@
 
   @media (max-width: 520px) {
     header {
-      padding: 2rem 1.25rem;
+      padding: 1.5rem 1.25rem;
+    }
+
+    .header-top {
+      flex-direction: column;
+      gap: 1rem;
     }
 
     h1 {
