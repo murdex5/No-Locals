@@ -11,7 +11,7 @@ const loading = ref(true);
 
 onMounted(async () => {
     try {
-        const response = await fetch(`/api/business/${id}`);
+        const response = await fetch(`/api/businesses/${id}`);
         if (!response.ok) throw new Error(`Business not found`);
 
         business.value = await response.json();
@@ -34,7 +34,7 @@ onMounted(async () => {
             <h2>{{ business.name }}</h2>
             <div class="rating-row">
               <span class="stars">★★★★★</span>
-              <span class="rating-value">{{ business.rating || 'N/A' }}</span>
+              <span class="rating-value">{{ business.rating || '0' }}</span>
               <span class="category-badge">{{ business.category }}</span>
             </div>
           </div>
