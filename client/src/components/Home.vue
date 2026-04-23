@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import MainLayout from '@/layouts/MainLayout.vue';
+import { useRouter } from 'vue-router';
 
 const serverMessage = ref('Loading...');
 const businesses = ref([]);
@@ -15,6 +16,7 @@ onMounted(async () => {
     serverMessage.value = "Server is offline ❌";
   }
 })
+
 </script>
 
 <template>
@@ -27,17 +29,17 @@ onMounted(async () => {
     <section class="business-list">
       <div v-if="businesses.length > 0">
         <div v-for="biz in businesses" :key="biz.id" class="business-card">
-          <h3>{{ biz.name }}</h3>
-          <p><strong>Category:</strong> {{ biz.category }}</p>
+          <router-link :to="'/business/' + biz.id" class="card-link">
+            <h3>{{ biz.name }}</h3>
+            <p><strong>Category:</strong> {{ biz.category }}</p>
+          </router-link>
         </div>
       </div>
       <p v-else-if="serverMessage !== 'Server is offline ❌'">Searching for records...</p>
+      <router-link :to="'/post/business'">
+      <h2>Post</h2>
+      </router-link>
     </section>
-
-    <div class="status-box">
-      <h4>Connection Status:</h4>
-      <p>{{ serverMessage }}</p>
-    </div>
   </MainLayout>
 </template>
 

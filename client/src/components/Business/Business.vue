@@ -1,9 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import MainLayout from '@/layouts/MainLayout.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
+const router = useRouter();
 const id = route.params.id;
 
 const business = ref(null);
@@ -11,7 +12,7 @@ const loading = ref(true);
 
 onMounted(async () => {
     try {
-        const response = await fetch(`/api/business/${id}`);
+        const response = await fetch(`/api/businesses/${id}`);
         if (!response.ok) throw new Error(`Business not found`);
 
         business.value = await response.json();
@@ -21,6 +22,22 @@ onMounted(async () => {
         loading.value = false
     }
 });
+
+async function deleteBusiness(id){
+  try {
+    const res = await fetch(`http://localhost:3000/businesses/${id}`, {
+      method: 'DELETE'
+    });
+
+    const data = await res.json();
+    
+    if (!res.ok) throw new Error(data.error);
+    console.log('Deleted:', data.message);
+    router.push('/');
+  } catch (err){
+    console.error('Delete failed:', err.message);
+  }
+}
 </script>
 
 <template>
@@ -34,7 +51,7 @@ onMounted(async () => {
             <h2>{{ business.name }}</h2>
             <div class="rating-row">
               <span class="stars">★★★★★</span>
-              <span class="rating-value">{{ business.rating || 'N/A' }}</span>
+              <span class="rating-value">{{ business.rating || '0' }}</span>
               <span class="category-badge">{{ business.category }}</span>
             </div>
           </div>
@@ -54,8 +71,8 @@ onMounted(async () => {
             <h3>About this business</h3>
             <p>{{ business.description || 'No description available yet.' }}</p>
             <p class="location-text">📍 {{ business.location }}</p>
+            <button @click="deleteBusiness(business.id)">Delete</button>
           </div>
-          
           <div class="flagged-box">
              <h4>Community Report</h4>
              <p>This business in {{ business.location }} has been flagged for its "No Locals" policy.</p>

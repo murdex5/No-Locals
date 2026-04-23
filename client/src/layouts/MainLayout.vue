@@ -1,10 +1,10 @@
-<script setup>
-</script>
 
 <template>
   <div class="layout">
     <header>
-      <h1>No Locals?</h1>
+      <router-link :to="'/'" >
+        <h1>No Locals?</h1>
+      </router-link>
       <p>Help people find businesses that value locals no matter the seasons</p>
     </header>
 
