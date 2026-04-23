@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import db from '../../db.js';
 
 const router = express.Router();
