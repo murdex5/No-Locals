@@ -37,6 +37,7 @@ export function useUser() {
         isLoggedIn,
         username,
         login,
+        logout,
         initializeUser
     };
 }
