@@ -31,13 +31,13 @@ const router = express.Router();
 
 // Register 
 router.post('/register', async (req, res) => {
-    const {username, email, password} = req.body;
+    const {username, email, full_name, password} = req.body;
     console.log('body:', req.body);  
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const [result] = await db.query (
-            'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-            [username, email, hashedPassword]
+            'INSERT INTO users (username, email, full_name, password) VALUES (?, ?, ?, ?)',
+            [username, email, full_name, hashedPassword]
         );
         res.status(201).json({ message: 'User created', id: result.insertId});
     } catch (err) {
@@ -49,9 +49,9 @@ router.post('/register', async (req, res) => {
 // Login
 
 router.post('/login', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, password } = req.body;
     try {
-        const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
 
         if (rows.length === 0) return res.status(401).json({ error: 'Inavalid credentials'});
 

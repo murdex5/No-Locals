@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import MainLayout from '@/layouts/MainLayout.vue';
 
 const router = useRouter();
-const form = ref({ username: '', email: '', password: '' });
+const form = ref({ username: '', email: '', full_name: '', password: '' });
 const error = ref(null);
 
 async function register() {
@@ -31,6 +31,7 @@ async function register() {
     <MainLayout>
         <div>
             <h2>Register</h2>
+            <input v-model="form.full_name" placeholder="Full Name"/>
             <input v-model="form.username" placeholder="Username" />
             <input v-model="form.email" placeholder="Email" type="email" />
             <input v-model="form.password" placeholder="Password" type="password" />
