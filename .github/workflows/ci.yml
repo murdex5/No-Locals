@@ -21,7 +21,6 @@ jobs:
         node-version: [22.x, 24.x]
         folder: [client, server]
 
-    # REMOVED the defaults: working-directory section entirely
 
     steps:
       - name: Checkout code
@@ -39,9 +38,7 @@ jobs:
         run: npm install
 
       - name: Run linter
-        # This tells the root npm to run the lint script FOR the specific workspace
         run: npm run lint -w ${{ matrix.folder }}
 
       - name: Run tests
-        # This tells the root npm to run the test script FOR the specific workspace
         run: npm test -w ${{ matrix.folder }}
