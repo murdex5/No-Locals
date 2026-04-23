@@ -49,9 +49,9 @@ router.post('/register', async (req, res) => {
 // Login
 
 router.post('/login', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, password } = req.body;
     try {
-        const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
 
         if (rows.length === 0) return res.status(401).json({ error: 'Inavalid credentials'});
 
