@@ -21,6 +21,22 @@ onMounted(async () => {
         loading.value = false
     }
 });
+
+async function deleteBusiness(id){
+  try {
+    const res = await fetch(`http://localhost:3000/businesses/${id}`, {
+      method: 'DELETE'
+    });
+
+    const data = await res.json();
+    
+    if (!res.ok) throw new Error(data.error);
+    console.log('Deleted:', data.message);
+    route.push('/');
+  } catch (err){
+    console.error('Delete failed:', err.message);
+  }
+}
 </script>
 
 <template>
@@ -55,7 +71,7 @@ onMounted(async () => {
             <p>{{ business.description || 'No description available yet.' }}</p>
             <p class="location-text">📍 {{ business.location }}</p>
           </div>
-          
+            <button @click="deleteBusiness(business.id)">Delete</button>
           <div class="flagged-box">
              <h4>Community Report</h4>
              <p>This business in {{ business.location }} has been flagged for its "No Locals" policy.</p>
