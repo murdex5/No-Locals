@@ -9,24 +9,24 @@ dotenv.config();
 
 const router = express.Router();
 
-// router.get('/:username', async (req, res) => {
-//     const { username } = req.params;
-//     const sql = "SELECT * FROM users WHERE username = ?";
+router.get('/:username', async (req, res) => {
+    const { username } = req.params;
+    const sql = "SELECT * FROM users WHERE username = ?";
 
-//     try {
-//         const [rows] = await db.query(sql, [username]);
+    try {
+        const [rows] = await db.query(sql, [username]);
 
-//         if (rows.length === 0) {
-//             return res.status(404).json({ message: "User not found" });
-//         }
+        if (rows.length === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
 
-//         res.json(rows[0]);
-//     } catch (err) {
-//         // Remove conlose log later
-//         console.error("Database Error:", err);
-//         res.status(500).json({ error: "Internal Server Error" });
-//     }
-// });
+        res.json(rows[0]);
+    } catch (err) {
+        // Remove conlose log later
+        console.error("Database Error:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 
 
 // Register 
@@ -52,12 +52,11 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
         const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
-
+            
         if (rows.length === 0) return res.status(401).json({ error: 'Inavalid credentials'});
 
         const user = rows[0];
         const match = await bcrypt.compare(password, user.password);
-
         if(!match) return res.status(401).json({ error: 'Invalid credentials'});
 
         const token = jwt.sign(
@@ -68,7 +67,7 @@ router.post('/login', async (req, res) => {
 
         res.json({ token, username: user.username });
     } catch (err) {
-        console.error(err);
+        console.error(err.message);
         res.status(500).json({ error: err.message });
     }
 });
