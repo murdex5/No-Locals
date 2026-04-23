@@ -55,8 +55,8 @@ import MainLayout from '@/layouts/MainLayout.vue';
         <div class="section-icon">👤</div>
         <h2 class="section-title">Behind the Movement</h2>
         <div class="bio-card">
-          <p>I'm a local just like you. I started <strong>NoLocals</strong> after being told there was "no room" at my favourite neighbourhood pub, only to watch them seat a group of travellers five minutes later.</p>
-          <p>I realised we needed a way to track who actually supports the people who live here year-round — not just when it's convenient.</p>
+          <p>I'm a local just like you. I started <strong>NoLocals</strong> after being told there was "no room" at my favorite neighborhood pub, only to watch them seat a group of travelers five minutes later.</p>
+          <p>I realized we needed a way to track who actually supports the people who live here year-round — not just when it's convenient.</p>
         </div>
       </section>
 
