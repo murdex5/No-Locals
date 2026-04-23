@@ -4,7 +4,7 @@ import db from '../../db.js';
 
 const router = express.Router();
 
-
+// Get Requests
 router.get('/', async (req, res) => {
     try {
     const [rows] = await db.query('SELECT * FROM businesses');
@@ -33,5 +33,18 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// Post
+
+router.post('/', async (req, res) => {
+  const { name, category, location, rating, image_url, description } = req.body;
+  try {
+    const sql = 'INSERT INTO businesses (name, category, location, rating, image_url, description) VALUES (?, ?, ?, ?, ?, ?)';
+    const [result] = await db.query(sql, [name, category, location, rating, image_url, description]);
+    res.status(201).json({ id: result.insertId, name, category });
+  } catch (err) {
+    console.error('DB Error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 export default router;
