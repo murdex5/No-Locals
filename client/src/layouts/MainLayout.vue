@@ -13,167 +13,285 @@ const handleLogout = () => {
 
 <template>
   <div class="layout">
-    <header>
-      <div class="header-top">
-        <router-link :to="'/'">
-          <h1>No Locals?</h1>
+    <header class="site-header">
+      <div class="header-inner">
+        <router-link to="/" class="logo">
+          <span class="logo-icon">🗺️</span>
+          <span class="logo-text">No<span class="logo-accent">Locals</span></span>
         </router-link>
+
+        <nav class="main-nav">
+          <router-link to="/" class="nav-link">Explore</router-link>
+          <router-link to="/about" class="nav-link">About</router-link>
+          <router-link to="/post/business" class="nav-link nav-link--cta">+ Report Business</router-link>
+        </nav>
+
         <div class="user-section">
-          <span v-if="isLoggedIn" class="username">👤 {{ username }}</span>
-          <button v-if="isLoggedIn" @click="handleLogout" class="logout-btn">Logout</button>
-          <router-link v-else to="/login" class="login-link">Login</router-link>
+          <template v-if="isLoggedIn">
+            <span class="username">👤 {{ username }}</span>
+            <button @click="handleLogout" class="btn btn--outline btn--sm">Log out</button>
+          </template>
+          <template v-else>
+            <router-link to="/login" class="btn btn--ghost btn--sm">Sign in</router-link>
+            <router-link to="/register" class="btn btn--primary btn--sm">Join free</router-link>
+          </template>
         </div>
       </div>
-      <p>Help people find businesses that value locals no matter the seasons</p>
     </header>
 
-    <main>
+    <main class="site-main">
       <slot />
     </main>
 
-    <footer>
-      <p>&copy; 2026 No-Locals?</p>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="logo-icon">🗺️</span>
+          <span class="footer-name">NoLocals</span>
+          <p class="footer-tagline">Empowering locals, one review at a time.</p>
+        </div>
+        <div class="footer-links">
+          <router-link to="/" class="footer-link">Home</router-link>
+          <router-link to="/about" class="footer-link">About</router-link>
+          <router-link to="/post/business" class="footer-link">Report Business</router-link>
+        </div>
+        <p class="footer-copy">&copy; 2026 No-Locals. All rights reserved.</p>
+      </div>
     </footer>
   </div>
 </template>
 
 <style scoped>
+  /* ── Layout Shell ─────────────────────────────────── */
   .layout {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
   }
 
-  header {
-    text-align: center;
-    padding: 3rem 1.5rem;
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+  /* ── Header ───────────────────────────────────────── */
+  .site-header {
+    background: var(--white);
     border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
-  }
-
-  header::before {
-    content: '';
-    position: absolute;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% -20%, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
-    pointer-events: none;
+    z-index: 100;
   }
 
-  .header-top {
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 64px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
-    position: relative;
-    z-index: 1;
+    gap: 2rem;
   }
 
+  /* ── Logo ─────────────────────────────────────────── */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    flex-shrink: 0;
+  }
+
+  .logo-icon {
+    font-size: 1.4rem;
+  }
+
+  .logo-accent {
+    color: var(--primary);
+  }
+
+  /* ── Nav ──────────────────────────────────────────── */
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+  }
+
+  .nav-link {
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+    background: var(--light-gray);
+  }
+
+  .nav-link.router-link-active {
+    color: var(--primary-dark);
+    background: var(--primary-light);
+  }
+
+  .nav-link--cta {
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    font-weight: 600;
+    margin-left: 0.5rem;
+  }
+
+  .nav-link--cta:hover {
+    background: var(--primary);
+    color: var(--white);
+  }
+
+  /* ── User Section ─────────────────────────────────── */
   .user-section {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
+    flex-shrink: 0;
   }
 
   .username {
-    color: var(--accent);
+    font-size: 0.875rem;
     font-weight: 600;
-  }
-
-  .logout-btn {
-    padding: 0.5rem 1rem;
-    background: var(--accent);
-    color: var(--bg-primary);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
-  }
-
-  .logout-btn:hover {
-    background: var(--accent-hover);
-  }
-
-  .login-link {
-    padding: 0.5rem 1rem;
-    color: var(--accent);
-    text-decoration: none;
-    border: 1px solid var(--accent);
-    border-radius: 6px;
-    transition: 0.3s;
-  }
-
-  .login-link:hover {
-    background: rgba(0, 217, 255, 0.1);
-  }
-
-  h1 {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: var(--text-primary);
-    font-size: 2.5rem;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    margin: 0;
-    background: linear-gradient(135deg, var(--accent) 0%, #00a8cc 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  header p {
-    margin: 0;
     color: var(--text-secondary);
-    font-size: 1.05rem;
-    position: relative;
-    z-index: 1;
   }
 
-  main {
+  /* ── Buttons ──────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.15s ease;
+  }
+
+  .btn--sm {
+    padding: 0.35rem 0.9rem;
+    font-size: 0.875rem;
+  }
+
+  .btn--primary {
+    background: var(--primary);
+    color: var(--dark);
+    border-color: var(--primary);
+  }
+
+  .btn--primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+  }
+
+  .btn--outline {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border);
+  }
+
+  .btn--outline:hover {
+    border-color: var(--primary);
+    color: var(--primary-dark);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--text-secondary);
+  }
+
+  .btn--ghost:hover {
+    color: var(--text-primary);
+    background: var(--light-gray);
+  }
+
+  /* ── Main ─────────────────────────────────────────── */
+  .site-main {
     flex: 1;
-    font-family: inherit;
-    max-width: 1000px;
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 2rem 1.5rem;
-    color: var(--text-primary);
-    width: 100%;
   }
 
-  footer {
+  /* ── Footer ───────────────────────────────────────── */
+  .site-footer {
+    background: var(--dark);
+    color: var(--white);
     margin-top: auto;
-    padding: 1.5rem;
-    border-top: 1px solid var(--border);
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
     text-align: center;
   }
 
-  footer p {
-    margin: 0;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    letter-spacing: 0.02em;
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
   }
 
-  @media (max-width: 520px) {
-    header {
-      padding: 1.5rem 1.25rem;
+  .footer-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  .footer-tagline {
+    margin: 0;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.875rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-link {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.15s;
+  }
+
+  .footer-link:hover {
+    color: var(--primary);
+  }
+
+  .footer-copy {
+    margin: 0;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.8rem;
+  }
+
+  /* ── Mobile ───────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .main-nav {
+      display: none;
     }
 
-    .header-top {
-      flex-direction: column;
-      gap: 1rem;
+    .header-inner {
+      justify-content: space-between;
     }
 
-    h1 {
-      font-size: 2rem;
-    }
-
-    main {
+    .site-main {
       padding: 1.25rem;
     }
   }
