@@ -7,7 +7,7 @@ import userRoutes from './routes/user/user.js'
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json());  // ← must be before routes
 
 app.get('/test', (req, res) => {
   res.json({ message: "Server is online!" });
@@ -15,6 +15,6 @@ app.get('/test', (req, res) => {
 
 // Routes
 app.use('/businesses', businessesRoutes);
-app.use('/user', userRoutes);
+app.use('/users', userRoutes);
 
 app.listen(3000, () => console.log('Backend running on http://localhost:3000'));

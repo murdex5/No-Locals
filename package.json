@@ -18,7 +18,9 @@
     "test": "npm test -w client && npm test -w server"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
+    "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.22.2"
   }
 }
