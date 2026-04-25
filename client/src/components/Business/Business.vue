@@ -12,12 +12,24 @@ const id = route.params.id;
 const business = ref(null);
 const loading = ref(true);
 const deleteConfirm = ref(false);
+const googleMapsUri = ref(null);
+const stars = ref(null);
+
+
+const getStars = (value) => {
+  const rating = Math.round(value);
+  return '⭐'.repeat(rating) + '☆'.repeat(5 - rating);
+};
 
 onMounted(async () => {
     try {
         const response = await fetch(`/api/businesses/${id}`);
         if (!response.ok) throw new Error(`Business not found`);
         business.value = await response.json();
+        const encoded = encodeURIComponent(business.value.location);
+        googleMapsUri.value = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+        stars.value = getStars(business.value.rating);
+        console.log(stars.value);
     } catch (error) {
         console.error("Error fetching businesses.", error);
     } finally {
@@ -72,9 +84,17 @@ async function deleteBusiness(id) {
             <span class="tag tag--flagged">⚠️ Flagged</span>
           </div>
           <h1 class="detail-title">{{ business.name }}</h1>
-          <p class="detail-location" v-if="business.location">📍 {{ business.location }}</p>
+          <a 
+            :href="googleMapsUri"
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="detail-location" 
+            v-if="business?.location"
+          >
+            📍 {{ business.location }}
+          </a>
           <div class="rating-row" v-if="business.rating">
-            <span class="stars">★★★★★</span>
+            <span class="stars">{{ stars }}</span>
             <span class="rating-val">{{ business.rating }}</span>
             <span class="rating-label">/ 5</span>
           </div>
