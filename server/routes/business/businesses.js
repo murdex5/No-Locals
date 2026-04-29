@@ -1,6 +1,6 @@
 import express from 'express';
 import db from '../../db.js';
-import { authenticateToken } from '../../middlewere/auth.js';
+import { authenticateToken } from '../../middleware/auth.js';
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
