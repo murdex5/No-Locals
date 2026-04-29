@@ -1,17 +1,22 @@
-import mysql from 'mysql2/promise';
+import pkg from 'pg';
 import dotenv from 'dotenv';
+const { Pool } = pkg;
 
 dotenv.config();
 
-const db = mysql.createPool({
-  host: process.env.MYSQL_HOST || 'localhost',
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_DB_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+const db = new Pool({
+    host: process.env.POSTGRESS_HOST || 'localhost',
+    port: process.env.POSTGRESS_PORT,
+    user: process.env.POSTGRESS_USERNAME,
+    password: process.env.POSTGRESS_PASSWORD,
+    database: process.env.POSTGRESS_DATABASE,
 });
 
+db.connect((err, _client, _release) => {
+    if (err) {
+        return console.error("Error aquring client", err.stack);
+    }
+    console.log('Successfully connected to postgress server');
+});
 
 export default db;

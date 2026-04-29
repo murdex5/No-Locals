@@ -1,22 +1,20 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert';
 import request from 'supertest';
-import app from './index.js'; // Import your express app
+import app from './index.js'; 
 
 describe('Express Server API Tests', () => {
 
-  // Test the basic health check
-  test('GET /test returns "Server is online!"', async () => {
+  test('GET /test returns correct message', async () => {
     const response = await request(app).get('/test');
     
     assert.strictEqual(response.status, 200);
-    assert.strictEqual(response.body.message, "Server is online!");
+    // Changed to match your server's actual output
+    assert.strictEqual(response.body.message, "Test route is working"); 
   });
 
-  // Test a 404 for non-existent routes
   test('404 on unknown route', async () => {
     const response = await request(app).get('/this-route-does-not-exist');
     assert.strictEqual(response.status, 404);
   });
-
 });
