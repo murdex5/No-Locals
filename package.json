@@ -17,12 +17,16 @@
     "start": "concurrently \"npm run start -w server\" \"npm run dev -w client\"",
     "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
     "lint": "eslint .",
-    "test": "npm test -w client && npm test -w server"
+    "test": "npm test -w client && npm test -w server",
+    "test-server": "npm run dev -w server"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cloudinary": "^1.41.3",
     "cors": "^2.8.6",
     "jsonwebtoken": "^9.0.3",
+    "multer": "^2.1.1",
+    "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.22.2",
     "pg": "^8.20.0"
   }
