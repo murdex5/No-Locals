@@ -12,7 +12,7 @@ const db = new Pool({
     database: process.env.POSTGRESS_DATABASE,
 });
 
-db.connect((err, client, reliease) => {
+db.connect((err, _client, _release) => {
     if (err) {
         return console.error("Error aquring client", err.stack);
     }
