@@ -9,8 +9,8 @@
     </div>
     <div class="nav">
       <a class="nav-link" href="#">Businesses</a>
-      <a class="nav-link" href="#">Resources</a> 
-      <a class="nav-link" href="#">Contribute</a>
+      <a class="nav-link" href="https://github.com/murdex5/No-Locals" target="_blank">Contribute</a>
+      <router-link to="/about" class="nav-link">About</router-link>
     </div>
   </header>
 
