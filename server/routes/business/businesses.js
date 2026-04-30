@@ -50,7 +50,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-
 router.get('/my-businesses', authenticateToken, async (req, res) => {
     try {
         const { rows } = await db.query( 
@@ -61,7 +60,7 @@ router.get('/my-businesses', authenticateToken, async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
-})
+});
 
 // Post Requests
 
@@ -105,6 +104,47 @@ router.delete('/:id', async (req, res) => {
         console.error('DB Error:', err.message);
         res.status(500).json({ error: err.message});
     }
-})
+});
+
+// Business Reviews
+
+router.get('/:id/reviews', async (req, res) => {
+    const business_id = req.params.id;
+    const sql = 'SELECT * FROM reviews WHERE business_id = $1 ORDER BY id DES';
+    try {
+        const { rows } = await db.query(sql, [business_id]);
+        
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Business not found'});
+        }
+        res.json(rows[0]);
+    } catch (err) {
+        console.error("Database Error:", err);
+        res.status(500).json({ error: 'Internal Server Error'});
+    }
+});
+
+
+// Reviews Posts
+router.post('/:id/reviews', authenticateToken, async (req, res) => {
+    const business_id = req.params.id;
+    const user_id = req.user.id;
+
+    const { content} = req.body;
+
+    try {
+        const sql = `
+        INSERT INTO reviews (content, user_id, business_id, likes, dislikes)
+        VALUES ($1, $2, $3, 0, 0) 
+        RETURNING *`;
+        const { rows } = await db.query(sql, [content, user_id, business_id]);
+
+        res.status(201).json(rows[0]);
+    } catch (err) {
+        console.error('DB Error:', err.message);
+        res.status(500).json({ error: 'Failed to create review' });
+    }
+
+});
 
 export default router;
