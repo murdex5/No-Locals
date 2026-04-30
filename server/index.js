@@ -19,9 +19,9 @@ app.get('/test', (req, res) => {
   res.json({ message: "Test route is working" });
 });
 
-app.get('/', (req, res) => {
-  res.json({ message: "Server is online"});
-})
+// app.get('/', (req, res) => {
+//   res.json({ message: "Server is online"});
+// })
 
 // // Routes
 
