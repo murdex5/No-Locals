@@ -110,7 +110,7 @@ router.delete('/:id', async (req, res) => {
 
 router.get('/:id/reviews', async (req, res) => {
     const business_id = req.params.id;
-    const sql = 'SELECT * FROM reviews WHERE business_id = $1 ORDER BY id DES';
+    const sql = 'SELECT * FROM reviews WHERE business_id = $1 ORDER BY id DESC';
     try {
         const { rows } = await db.query(sql, [business_id]);
         
@@ -130,7 +130,7 @@ router.post('/:id/reviews', authenticateToken, async (req, res) => {
     const business_id = req.params.id;
     const user_id = req.user.id;
 
-    const { content} = req.body;
+    const { content } = req.body || {};
 
     try {
         const sql = `
