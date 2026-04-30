@@ -10,6 +10,12 @@ const db = new Pool({
     user: process.env.POSTGRESS_USERNAME,
     password: process.env.POSTGRESS_PASSWORD,
     database: process.env.POSTGRESS_DATABASE,
+    ssl: {
+        rejectUnauthorized: false, // Set to false only if you want to skip CA certificate validation
+        ca: process.env.POSTGRESS_CA || `-----BEGIN CERTIFICATE-----
+... (Your certificate here) ...
+-----END CERTIFICATE-----`,
+    },
 });
 
 db.connect((err, _client, _release) => {
