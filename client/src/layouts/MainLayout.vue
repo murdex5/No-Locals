@@ -8,7 +8,7 @@
       <router-link to="/"><img  src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777574904/No_Locals_1_lgu0n2.png" alt="No Locals Logo" class="home-logo"></router-link>
     </div>
     <div class="nav">
-      <a class="nav-link" href="#">Businesses</a>
+      <router-link to="/businesses" class="nav-link">Businesses</router-link>
       <a class="nav-link" href="https://github.com/murdex5/No-Locals" target="_blank">Contribute</a>
       <router-link to="/about" class="nav-link">About</router-link>
     </div>
