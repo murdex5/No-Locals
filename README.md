@@ -1,6 +1,6 @@
 # NoLocals (Website is still being created)
 
-No Locals is an <strong>open source</strong> user-friendly platform designed to help travelers find accommodations that are welcoming to locals. With a focus on community and support, we connect visitors with hosts who prioritize inclusivity and respect for the local culture.
+No Locals is an user-friendly platform designed to help travelers find accommodations that are welcoming to locals. With a focus on community and support, we connect visitors with hosts who prioritize inclusivity and respect for the local culture.
 
 ## Purpose
 The purpose of No Locals is to foster meaningful connections between travelers and local residents. We believe in creating a positive travel experience that goes beyond mere sightseeing. Our platform encourages cultural exchange and mutual understanding between visitors and the communities they visit.

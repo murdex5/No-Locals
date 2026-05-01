@@ -26,7 +26,7 @@ onMounted(async () => {
             Exposing Discriminatory Hospitality
           </h3>
           <p class="home-p">
-            No Locals is a website that helps locals to point out restaurants, hotels or accommodations that do not serve locals.
+            <strong>No Locals</strong> is a website that helps locals to point out restaurants, hotels or accommodations that do not serve locals.
           </p>
           <button class="home-btn">
             Report a business
@@ -35,7 +35,7 @@ onMounted(async () => {
 
         <!-- Moved image_d64695.png outside of home-text for side-by-side layout -->
         <div class="home-image-container">
-          <img src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777565711/no_locals_png_tn65de.png" alt="Hero Image" class="img-home">
+          <img src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777589936/IMG_0872_vwyw3z.jpg" alt="Hero Image" class="img-home">
         </div>
       </div>
     </section>

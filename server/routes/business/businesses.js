@@ -25,7 +25,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
     try {
-        const {rows} = await db.query('select * from businesses');
+        const {rows} = await db.query('select * from public.businesses');
         res.json(rows);
     } catch (err) {
         console.error(err);
