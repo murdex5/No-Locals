@@ -6,7 +6,7 @@ const name = ref('');
 const category = ref('');
 const location = ref('');
 const description = ref('');
-const rating = ref(5); // Default rating
+const rating = ref(0); // Default rating
 const imageFile = ref(null);
 
 const isLoading = ref(false);
@@ -17,6 +17,7 @@ const successMessage = ref('');
 const handleFileUpload = (event) => {
   imageFile.value = event.target.files[0];
 };
+
 const submitBusiness = async (event) => {
     const token = localStorage.getItem('token');
 
@@ -29,7 +30,7 @@ const submitBusiness = async (event) => {
 
     const imageFile = document.querySelector('#imageInput').files[0];
     if (imageFile) {
-        formData.append('image', imageFile.value);
+        formData.append('image', imageFile);
     }
 
     try {
@@ -42,8 +43,10 @@ const submitBusiness = async (event) => {
         });
 
         const result = await response.json();
+
         if (response.ok) {
             console.log("Business created!", result);
+            router.push(`/businesses/${result.id}`);
         } else {
             console.error("Upload failed", result.error);
         }
@@ -74,6 +77,11 @@ const submitBusiness = async (event) => {
           <div class="form-group">
             <label>Location</label>
             <input v-model="location" type="text" required placeholder="City, Street">
+          </div>
+          
+          <div class="form-group">
+            <label>Rating</label>
+            <input v-model="rating" type="text"  required placeholder="4.5">
           </div>
 
           <div class="form-group">
