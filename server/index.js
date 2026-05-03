@@ -8,6 +8,7 @@ import userRoutes from './routes/user/user.js'
 import reviewRoutes from './routes/reviews/reviews.js';
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -25,6 +26,14 @@ app.get('/test', (req, res) => {
 
 // // Routes
 
+app.use((req, res, next) => {
+  // console.log(`📨 ${req.method} ${req.path}`);
+  // console.log('Content-Type:', req.headers['content-type']);
+  // console.log('Body:', req.body);
+  next();
+});
+
+
 app.use('/users', userRoutes);
 app.use('/businesses', businessesRoutes);
 app.use('/reviews', reviewRoutes);
@@ -34,6 +43,12 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get(/^(?!\/api).+/, (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
+
+
+app.use((err, req, res, _next) => {
+  console.error('🚨 GLOBAL ERROR HANDLER:', err);
+  res.status(500).json({ error: err.message });
 });
 
 export default app;

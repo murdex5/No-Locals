@@ -34,7 +34,7 @@ const handleLogout = () => {
         <span>Logged in as: <strong>{{  username }}</strong></span>
         <button @click="handleLogout">Logout</button>
       </div>
-      <router-link v-else to="/login">Login</router-link>
+      <router-link v-else to="/register">Register</router-link>
     </div>
   </header>
 
