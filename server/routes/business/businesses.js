@@ -2,26 +2,38 @@ import express from 'express';
 import db from '../../db.js';
 import { authenticateToken } from '../../middleware/auth.js';
 import multer from 'multer';
-import { v2 as cloudinary } from 'cloudinary';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import dotenv from 'dotenv';
+import ImageKit from 'imagekit';
 
 dotenv.config();
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_name,
-    api_key: process.env.CLOUDINARY_api,
-    api_secret: process.env.CLOUDINARY_secret
-});
-
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: { folder: 'no-locals' },
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const router = express.Router();
+
+const imagekit = new ImageKit({
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
+});
+
+const uploadToImageKit = async (fileBuffer, filename) => {
+    try {
+        const response = await imagekit.upload({
+            file: fileBuffer,      
+            fileName: filename,     
+        });
+
+        return response.url;
+
+    } catch (error) {
+       
+        console.error("ImageKit Upload Error:", error);
+        throw error; 
+    }
+};
+
 
 router.get('/', async (req, res) => {
     try {
@@ -53,7 +65,7 @@ router.get('/:id', async (req, res) => {
 router.get('/my-businesses', authenticateToken, async (req, res) => {
     try {
         const { rows } = await db.query( 
-            'SELECT * FROM businesses owner_id = $1',
+            'SELECT * FROM businesses WHERE owner_id = $1',
             [req.user.id]
         );
         res.json(rows);
@@ -65,25 +77,62 @@ router.get('/my-businesses', authenticateToken, async (req, res) => {
 // Post Requests
 
 router.post('/', authenticateToken, upload.single('image'), async (req, res) => {
-    
-    const image_url = req.file ? req.file.path: null;
 
-    const {name,  category, location, rating, description} = req.body;
-    
+    const { name, category, location, rating, description, is_local_friendly } = req.body;
+    let image_url = null; 
+
+    if (req.file) {
+        try {
+            image_url = await uploadToImageKit(
+                req.file.buffer,
+                req.file.originalname
+            );
+        } catch (err) {
+            return res.status(500).json({
+                error: 'Image upload failed',
+                details: err.message
+            });
+        }
+    }
+
     const owner_id = req.user.id;
+    
+   // console.log('Extracted values:', { name, category, location, rating, description, is_local_friendly, owner_id, image_url });
 
     try {
         const sql = `
-        INSERT INTO businesses (name, category, location, rating, image_url, description, owner_id)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
-        RETURNING *;
+            INSERT INTO businesses (
+                name, category, location, rating, image_url, description, owner_id, is_local_friendly
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING *;
         `;
-        const { rows } = await db.query(sql, [name, category, location, rating, image_url, description, owner_id]);
+        
+        const values = [
+            name, 
+            category, 
+            location, 
+            rating || 0, 
+            image_url, 
+            description, 
+            owner_id, 
+            is_local_friendly || false 
+        ];
 
+        const { rows } = await db.query(sql, values);
         res.status(201).json(rows[0]);
+
     } catch (err) {
-        console.error('DB Error:', err.message);
-        res.status(500).json({ error: err.message });
+        console.error('❌ CATCH BLOCK - Full error object:', err);
+        console.error('Error message:', err.message);
+        console.error('Error code:', err.code);
+        console.error('Error detail:', err.detail);
+        
+        res.status(500).json({ 
+            error: err.message,
+            detail: err.detail,
+            code: err.code
+        });
     }
 });
 
@@ -96,7 +145,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const { result } = await db.query('DELETE FROM businesses WHERE id = $1', [id]);
 
-        if (result.affectedRows == 0) {
+        if (result.rowCount == 0) {
             return res.status(404).json({ error: 'Business not found'});
         }
         res.status(200).json({ message: 'Business deleted successfully'});
@@ -117,7 +166,7 @@ router.get('/:id/reviews', async (req, res) => {
         if (rows.length === 0) {
             return res.status(404).json({ error: 'Business not found'});
         }
-        res.json(rows[0]);
+        res.json(rows);
     } catch (err) {
         console.error("Database Error:", err);
         res.status(500).json({ error: 'Internal Server Error'});
