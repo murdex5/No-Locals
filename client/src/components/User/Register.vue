@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';
-import MainLayout from '@/layouts/MainLayout.vue'; // Updated path for reliability
+import MainLayout from '@/layouts/MainLayout.vue'; 
+const apiPath = import.meta.env.VITE_API_PATH;
+
 
 const router = useRouter();
 const form = ref({ username: '', email: '', full_name: '', password: ''});
@@ -13,7 +15,7 @@ async function register() {
    loading.value = true;
    
    try {
-    const res = await fetch('/api/users/register', { 
+    const res = await fetch(`${apiPath}/users/register`, { 
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(form.value)

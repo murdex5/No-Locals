@@ -13,6 +13,8 @@ const isLoading = ref(false);
 const errorMessage = ref('');
 const successMessage = ref('');
 
+const apiPath = import.meta.env.VITE_API_PATH;
+
 // Capture the file when the user selects it
 const handleFileUpload = (event) => {
   imageFile.value = event.target.files[0];
@@ -34,7 +36,7 @@ const submitBusiness = async (event) => {
     }
 
     try {
-        const response = await fetch('/api/businesses', {
+        const response = await fetch(`${apiPath}/businesses`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`
