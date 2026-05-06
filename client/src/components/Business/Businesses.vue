@@ -2,6 +2,7 @@
 import MainLayout from '@/layouts/MainLayout.vue';
 import { ref, onMounted } from 'vue';
 
+const apiPath = import.meta.env.VITE_API_PATH;
 
 const businesses = ref([]);
 const loading = ref(true);
@@ -10,7 +11,7 @@ const search = ref('');
 
 onMounted(async () => {
     try {
-        const bizzResponse = await fetch('/api/businesses');
+        const bizzResponse = await fetch(`${apiPath}/businesses/`);
         const bizzData = await bizzResponse.json();
         businesses.value = bizzData;
     } catch (error) {

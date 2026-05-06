@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router';
 import MainLayout from '@/layouts/MainLayout.vue';
 
 const router = useRouter();
+const apiPath = import.meta.env.VITE_VITE_API_PATH;
+
 
 const username = ref('');
 const password = ref('');
@@ -13,7 +15,11 @@ const handleLogin = async () => {
     try {
         errorMessage.value = '';
 
-        const response = await fetch('/api/users/login', {
+        if (!apiPath) {
+            console.error("API Path is not defined! Check your .env and VITE_ prefix.");
+        }
+
+        const response = await fetch(`${apiPath}/users/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

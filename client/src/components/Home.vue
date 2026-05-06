@@ -1,12 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import MainLayout from '@/layouts/MainLayout.vue';
-
+const apiPath = import.meta.env.VITE_API_PATH;
 const businesses = ref(null);
 
 onMounted(async () => {
   try {
-    const response = await fetch(`http://localhost:3000/businesses`);
+    const response = await fetch(`${apiPath}/businesses`);
     const bizzData = await response.json();
     businesses.value = bizzData;
   } catch (error) {

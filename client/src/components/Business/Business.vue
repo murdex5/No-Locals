@@ -1,4 +1,3 @@
-
 <script setup>
 import {ref, onMounted} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -8,12 +7,14 @@ const route = useRoute();
 const router = useRouter();
 const id = route.params.id;
 
+const apiPath = import.meta.env.VITE_API_PATH;
+
 const business = ref(null);
 const loading = ref(null);
 
 onMounted (async () => {
     try {
-        const response = await fetch(`/api/businesses/${id}`);
+        const response = await fetch(`${apiPath}/businesses/${id}`);
         if (!response.ok) throw new Error(`Business not found`);
         business.value = await response.json();
         console.log(business.value.image_url);
