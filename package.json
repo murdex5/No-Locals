@@ -20,7 +20,10 @@
     "client": "npm run dev -w client",
     "lint": "eslint client/src server",
     "test": "npm test -w client && npm test -w server",
-    "test-server": "npm run dev -w server"
+    "test-server": "npm run dev -w server",
+    "build": "npm install", 
+    "server:prod": "npm start -w server",
+    "client:build": "npm run build -w client"
   },
   "dependencies": {
     "axios": "^1.16.0",
