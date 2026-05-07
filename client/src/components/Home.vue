@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import MainLayout from '@/layouts/MainLayout.vue';
 const apiPath = import.meta.env.VITE_API_PATH;
 const businesses = ref(null);
@@ -27,9 +28,9 @@ onMounted(async () => {
           <p class="home-p">
             <strong>No Locals</strong> is a website that helps locals to point out restaurants, hotels or accommodations that do not serve locals.
           </p>
-          <button class="home-btn">
+          <router-link to="/businesses/submit" class="home-btn">
             Report a business
-          </button>
+          </router-link>
         </div>
 
         <div class="home-image-container">

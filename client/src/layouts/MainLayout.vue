@@ -85,7 +85,9 @@ const toggleMobileMenu = () => {
       <div class="footer-links">
         <div class="link-group">
           <h4>Platform</h4>
-          <p>Find Businesses</p>
+          <router-link to="/businesses">
+            <p>Find Businesses</p>
+          </router-link>
           <p>Report an Incident</p>
           <p>Global Map</p>
         </div>
