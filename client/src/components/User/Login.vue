@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import MainLayout from '@/layouts/MainLayout.vue';
 
 const router = useRouter();
-const apiPath = import.meta.env.VITE_VITE_API_PATH;
+const apiPath = import.meta.env.VITE_API_PATH;
 
 
 const username = ref('');

@@ -17,7 +17,7 @@ onMounted (async () => {
         const response = await fetch(`${apiPath}/businesses/${id}`);
         if (!response.ok) throw new Error(`Business not found`);
         business.value = await response.json();
-        console.log(business.value.image_url);
+        //console.log(business.value.image_url);
     } catch (error) {
         console.error("Error fetching businesses", error);
     } finally {
