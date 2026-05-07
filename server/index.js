@@ -7,8 +7,17 @@ import reviewRoutes from './routes/reviews/reviews.js';
 const app = express();
 
 // Middleware
+
+const getAllowedOrigin = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return process.env.FRONTEND_URL || 'https://no-locals.onrender.com';
+  }
+  // Development: allow localhost
+  return ['http://localhost:5173', 'http://localhost:3000'];
+};
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL, 
+  origin: getAllowedOrigin(), 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true

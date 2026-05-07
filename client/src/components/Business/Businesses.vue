@@ -10,17 +10,25 @@ const serverError = ref(false);
 const search = ref('');
 
 onMounted(async () => {
+    //console.log('API Path:', apiPath);
+    
     try {
-        const bizzResponse = await fetch(`${apiPath}/businesses/`);
+        const url = `${apiPath}/businesses/`;
+        //console.log('Fetching from:', url);
+        
+        const bizzResponse = await fetch(url);
+        if (!bizzResponse.ok) {
+            throw new Error(`HTTP error! status: ${bizzResponse.status}`);
+        }
         const bizzData = await bizzResponse.json();
         businesses.value = bizzData;
     } catch (error) {
-        serverError.value = true;
+        console.error('Error fetching businesses:', error);
+        serverError.value = false; 
     } finally {
-        loading.value = true;
+        loading.value = false;
     }
 });
-
 </script>
 
 
@@ -34,17 +42,20 @@ onMounted(async () => {
             </div>
         </section>
 
-        <div v-if="isLoading" class="loader-container">
+        <div v-if="loading" class="loader-container">
             <div class="loader"></div>
             <p>Loading Businesses...</p>
         </div>
 
+        <div v-else-if="serverError" class="error-container">
+            <p>❌ Error loading businesses. Please try again later.</p>
+        </div>
 
         <section v-else class="businesses-grid">
-            <div class="businesses-list" v-for="bizz in businesses">
+            <div class="businesses-list" v-for="bizz in businesses" :key="bizz.id">
                 <router-link :to="`/businesses/${bizz.id}`"><img :src="bizz.image_url" alt="Business Image" class="businesses-img"></router-link>
                 <router-link :to="`/businesses/${bizz.id}`" class="businesses-title">{{ bizz.name }}</router-link>
-                <p class="businesses-description">{{ bizz.description  }}</p>
+                <p class="businesses-description">{{ bizz.description }}</p>
             </div>
         </section>
     </MainLayout>
