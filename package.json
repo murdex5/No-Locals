@@ -11,7 +11,8 @@
     "concurrently": "^9.2.1",
     "eslint": "^10.2.1",
     "globals": "^17.5.0",
-    "supertest": "^7.2.2"
+    "supertest": "^7.2.2",
+    "tailwindcss": "^3.4.19"
   },
   "scripts": {
     "start": "concurrently \"npm run start -w server\" \"npm run dev -w client\"",
@@ -21,7 +22,7 @@
     "lint": "eslint client/src server",
     "test": "npm test -w client && npm test -w server",
     "test-server": "npm run dev -w server",
-    "build": "npm install", 
+    "build": "npm install",
     "server:prod": "npm start -w server",
     "client:build": "npm run build -w client"
   },
@@ -37,6 +38,8 @@
     "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.22.2",
     "pg": "^8.20.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "sharp": "^0.34.5"
   }
 }
