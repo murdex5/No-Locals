@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface MainLayoutProps {
@@ -7,18 +7,16 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
+  // Initialize state directly from localStorage
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
     const token = localStorage.getItem("token");
-    const storedName = localStorage.getItem("username");
-    if (token && storedName) {
-      setIsLoggedIn(true);
-      setUsername(storedName);
-    }
-  }, []);
+    return !!token;
+  });
+
+  const [username] = useState(() => localStorage.getItem("username") || "");
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
