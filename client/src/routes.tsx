@@ -3,6 +3,8 @@ import BusinessList from "./pages/business/BusinessList";
 import BusinessDetail from "./pages/business/BusinessDetail";
 import About from "./pages/About";
 import type { RouteObject } from "react-router-dom";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 export const routes: RouteObject[] = [
   {
@@ -13,6 +15,18 @@ export const routes: RouteObject[] = [
     path: "/about",
     element: <About />,
   },
+
+  // Login & Register
+  {
+    path: "/register",
+    element: <RegisterPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+
+  // Business
   {
     path: "/businesses",
     element: <BusinessList />,
