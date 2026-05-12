@@ -167,12 +167,14 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-1 pb-8">
             {/* Left side - Logo and tagline */}
             <div>
-              <img
-                src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777574904/No_Locals_1_lgu0n2.png"
-                height="25"
-                className="h-6 w-auto mb-4 invert"
-                alt="Logo"
-              />
+              <Link to="/" className="flex-shrink-0">
+                <img
+                  src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777574904/No_Locals_1_lgu0n2.png"
+                  height="25"
+                  className="h-6 w-auto mb-4 invert"
+                  alt="Logo"
+                />
+              </Link>
               <p className="text-gray-400 text-sm">
                 Exposing discriminatory practices in hospitality.
               </p>
