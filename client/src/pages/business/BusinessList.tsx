@@ -35,7 +35,8 @@ const BusinessList = () => {
         name: "Bar & Grill",
         description: "Casual dining and drinks",
         location: "Uptown",
-        image: "https://via.placeholder.com/400x300?text=Bar+Grill",
+        image:
+          "https://ik.imagekit.io/usvtlkftj/Screenshot_2026-01-30_001214_8cdgVBT8Z.png",
       },
     ];
 
