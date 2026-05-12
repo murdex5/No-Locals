@@ -1,5 +1,13 @@
+import MainLayout from "../layouts/MainLayout";
+
 const About = () => {
-  return <h1>Hello About</h1>;
+  return (
+    <>
+      <MainLayout>
+        <p>Hello About</p>
+      </MainLayout>
+    </>
+  );
 };
 
 export default About;

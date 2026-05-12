@@ -1,14 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout";
+import { useRoutes } from "react-router-dom";
+import { routes } from "./routes";
+import "./App.css";
 
 function App() {
-  return (
-    <Router>
-      <MainLayout>
-        <p>Hello world</p>
-      </MainLayout>
-    </Router>
-  );
+  const element = useRoutes(routes);
+  return { element };
 }
 
 export default App;

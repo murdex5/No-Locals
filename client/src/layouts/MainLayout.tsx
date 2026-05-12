@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const MainLayout = ({ children }) => {
+interface MainLayoutProps {
+  children: ReactNode;
+}
+
+const MainLayout = ({ children }: MainLayoutProps) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
@@ -24,146 +28,208 @@ const MainLayout = ({ children }) => {
     navigate("/login");
   };
 
-  const toggleMobilleMenu = () => {
+  const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className="flex flex-col min-h-screen">
       {/* Header / Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3 px-4">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
+      <nav className="bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex-shrink-0">
             <img
               src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777574904/No_Locals_1_lgu0n2.png"
               height="40"
               alt="Logo"
+              className="h-10 w-auto"
             />
           </Link>
 
-          {/* Bootstrap Hamburger Toggle */}
-          <button
-            className="navbar-toggler"
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link
+              to="/about"
+              className="text-gray-700 hover:text-black font-medium transition"
+            >
+              About
+            </Link>
+            <Link
+              to="/businesses"
+              className="text-gray-700 hover:text-black font-medium transition"
+            >
+              Businesses
+            </Link>
 
-          <div
-            className={`collapse navbar-collapse ${mobileMenuOpen ? "show" : ""}`}
+            {isLoggedIn ? (
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-600">
+                  Logged in as: <strong>{username}</strong>
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 bg-black text-white text-sm font-semibold rounded hover:bg-gray-800 transition"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/register"
+                className="text-gray-700 hover:text-black font-medium transition"
+              >
+                Register
+              </Link>
+            )}
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={toggleMobileMenu}
+            className="md:hidden flex flex-col gap-1.5 p-2 hover:bg-gray-100 rounded"
           >
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-              <li className="nav-item">
-                <Link className="nav-link px-3" to="/about">
-                  About
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link px-3" to="/businesses">
-                  Businesses
-                </Link>
-              </li>
+            <span
+              className={`w-6 h-0.5 bg-black transition-all ${
+                mobileMenuOpen ? "rotate-45 translate-y-2" : ""
+              }`}
+            />
+            <span
+              className={`w-6 h-0.5 bg-black transition-all ${
+                mobileMenuOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`w-6 h-0.5 bg-black transition-all ${
+                mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+              }`}
+            />
+          </button>
+        </div>
+
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <div className="md:hidden mt-4 pb-4 border-t border-gray-200 pt-4">
+            <div className="flex flex-col gap-3">
+              <Link
+                to="/about"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition"
+              >
+                About
+              </Link>
+              <Link
+                to="/businesses"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition"
+              >
+                Businesses
+              </Link>
 
               {isLoggedIn ? (
-                <li className="nav-item d-flex align-items-center gap-3">
-                  <span className="small">
+                <>
+                  <div className="px-4 py-2 text-sm text-gray-600">
                     Logged in as: <strong>{username}</strong>
-                  </span>
+                  </div>
                   <button
-                    onClick={handleLogout}
-                    className="btn btn-dark btn-sm"
+                    onClick={() => {
+                      handleLogout();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="px-4 py-2 bg-black text-white text-sm font-semibold rounded hover:bg-gray-800 transition"
                   >
                     Logout
                   </button>
-                </li>
+                </>
               ) : (
-                <li className="nav-item">
-                  <Link className="nav-link px-3" to="/register">
-                    Register
-                  </Link>
-                </li>
+                <Link
+                  to="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded transition"
+                >
+                  Register
+                </Link>
               )}
-            </ul>
+            </div>
           </div>
-        </div>
+        )}
       </nav>
 
       {/* Main Content Area */}
-      <main className="flex-grow-1 container my-5">{children}</main>
+      <main className="flex-grow max-w-7xl mx-auto w-full px-4 py-8">
+        {children}
+      </main>
 
       {/* Footer */}
-      <footer className="bg-black text-white py-4 mt-auto">
-        <div className="container-fluid px-5">
+      <footer className="bg-black text-white py-8 mt-auto">
+        <div className="max-w-7xl mx-auto px-4">
           {/* Main footer content */}
-          <div className="d-flex align-items-center justify-content-between py-2">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-1 pb-8">
             {/* Left side - Logo and tagline */}
             <div>
-              <img
-                src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777574904/No_Locals_1_lgu0n2.png"
-                height="25"
-                className="mb-4 invert-logo "
-                style={{ filter: "invert(1)" }}
-                alt="Logo
-              />
-              <p className="text-secondary small mb-0">
+              <Link to="/" className="flex-shrink-0">
+                <img
+                  src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777574904/No_Locals_1_lgu0n2.png"
+                  height="25"
+                  className="h-6 w-auto mb-4 invert"
+                  alt="Logo"
+                />
+              </Link>
+              <p className="text-gray-400 text-sm">
                 Exposing discriminatory practices in hospitality.
               </p>
             </div>
 
-            {/* Right side - Platform and Community */}
-            <div className="d-flex gap-5">
-              {/* Platform */}
-              <div>
-                <h6 className="small mb-2">Platform</h6>
-                <ul className="list-unstyled text-secondary small">
-                  <li>
-                    <Link
-                      to="/businesses"
-                      className="text-decoration-none text-secondary"
-                    >
-                      Find Businesses
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/report"
-                      className="text-decoration-none text-secondary"
-                    >
-                      Report an Incident
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+            {/* Center - Platform Links */}
+            <div>
+              <h6 className="text-sm font-semibold mb-3">Platform</h6>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    to="/businesses"
+                    className="text-gray-400 hover:text-white text-sm transition"
+                  >
+                    Find Businesses
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/report"
+                    className="text-gray-400 hover:text-white text-sm transition"
+                  >
+                    Report an Incident
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-              {/* Community */}
-              <div>
-                <h6 className="small mb-2">Community</h6>
-                <ul className="list-unstyled text-secondary small">
-                  <li>
-                    <Link
-                      to="/resources"
-                      className="text-decoration-none text-secondary"
-                    >
-                      Resources
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/privacy"
-                      className="text-decoration-none text-secondary"
-                    >
-                      Privacy Policy
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+            {/* Right - Community Links */}
+            <div>
+              <h6 className="text-sm font-semibold mb-3">Community</h6>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    to="/resources"
+                    className="text-gray-400 hover:text-white text-sm transition"
+                  >
+                    Resources
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/privacy"
+                    className="text-gray-400 hover:text-white text-sm transition"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
 
           {/* Footer divider and copyright */}
-          <div className="border-top border-secondary pt-2 text-center">
-            <p className="text-secondary small mb-0">
+          <div className="border-t border-gray-700 pt-6">
+            <p className="text-gray-400 text-sm text-center">
               &copy; 2026 No Locals. All rights reserved.
             </p>
           </div>
