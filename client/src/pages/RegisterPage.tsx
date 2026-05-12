@@ -3,7 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 const RegisterPage = () => {
   return (
     <MainLayout>
-      <p>Hello Retgiser</p>
+      <p>Hello Retgister</p>
     </MainLayout>
   );
 };
