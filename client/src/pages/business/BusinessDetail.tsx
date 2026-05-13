@@ -1,55 +1,45 @@
-import { useEffect, useState } from "react";
 import MainLayout from "../../layouts/MainLayout";
-import { Rating, Skeleton } from "@mui/material";
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import LoadingCard from "../../components/LoadingCard";
+import { Rating } from "@mui/material";
 
 const API_PATH = import.meta.env.VITE_API_PATH;
 
-interface BusinessProps {
-  id: string;
-  name: string;
-  description: string;
-  location: string;
-  rating: number;
-  image_url: string;
-  user_id: string;
-}
+// interface BusinessProps {
+//   id: string;
+//   name: string;
+//   description: string;
+//   location: string;
+//   rating: number;
+//   image_url: string;
+//   user_id: string;
+// }
 
 const BusinessDetail = () => {
   const { id } = useParams();
-  const [business, setBusiness] = useState<BusinessProps | null>(null);
-  const [dataIsLoaded, setDataIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (!id) return;
-    console.log(`${API_PATH}businesses/${id}`);
-    fetch(`${API_PATH}businesses/${id}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch data");
-        return res.json();
-      })
-      .then((json) => {
-        setBusiness(json);
-        setDataIsLoaded(true);
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(err.message);
-        setDataIsLoaded(true);
-      });
-  }, [id]);
+  const {
+    data: business,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["business", id],
+    queryFn: async () => {
+      const res = await fetch(`${API_PATH}businesses/${id}`);
+      if (!res.ok) throw new Error("Failed to fetch business data");
+      return res.json();
+    },
 
-  if (!dataIsLoaded) {
+    enabled: !!id,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+  });
+  if (isLoading) {
     return (
       <MainLayout>
-        <div className="py-8 text-center">
-          {/* <h1 className="text-xl">Loading businesses...</h1> */}
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-          <h1 className="py-8 text-2xl">Loading Businesses...</h1>
-        </div>
+        <LoadingCard />
       </MainLayout>
     );
   }
@@ -58,7 +48,7 @@ const BusinessDetail = () => {
     return (
       <MainLayout>
         <div className="py-8 text-center text-red-500">
-          <p>Error: {error}</p>
+          <p>Error: {error.message}</p>
         </div>
       </MainLayout>
     );
@@ -76,7 +66,12 @@ const BusinessDetail = () => {
 
   return (
     <MainLayout>
-      <div className="max-w-4xl mx-auto px-5 md:px-20 py-10 font-inter">
+      <motion.div
+        className="max-w-4xl mx-auto px-5 md:px-20 py-10 font-inter"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         <img
           src={business.image_url}
           alt={`A picture of ${business.name}`}
@@ -90,7 +85,7 @@ const BusinessDetail = () => {
           <p className="text-gray-500 text-sm">{business.location}</p>
         </div>
         <Rating value={business.rating} readOnly size="medium" />
-      </div>
+      </motion.div>
     </MainLayout>
   );
 };

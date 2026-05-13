@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
+import { motion, scale } from "framer-motion";
+import NavLink from "../components/Buttons/NavLink";
 
 const Home = () => {
   return (
@@ -17,16 +18,13 @@ const Home = () => {
                 Hospitality
               </h1>
               <p className="text-gray-600 mb-8 text-lg max-w-md leading-relaxed">
-                <span className="text-black font-bold">No Locals</span> is a
-                website that helps locals to point out restaurants, hotels or
-                accommodations that do not serve locals.
+                <motion.span className="text-black font-bold">
+                  No Locals
+                </motion.span>{" "}
+                is a website that helps locals to point out restaurants, hotels
+                or accommodations that do not serve locals.
               </p>
-              <Link
-                to="/report"
-                className="bg-black text-white px-8 py-3 rounded-full font-bold w-fit hover:bg-gray-800 transition"
-              >
-                Report a business
-              </Link>
+              <NavLink to="/report">Report a business</NavLink>{" "}
             </section>
 
             {/* Right Section - Image */}
