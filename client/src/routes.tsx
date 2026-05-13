@@ -5,6 +5,7 @@ import About from "./pages/About";
 import type { RouteObject } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import ReportBusiness from "./pages/business/ReportBusiness";
 
 export const routes: RouteObject[] = [
   {
@@ -34,5 +35,9 @@ export const routes: RouteObject[] = [
   {
     path: "/b/:id",
     element: <BusinessDetail />,
+  },
+  {
+    path: "/report",
+    element: <ReportBusiness />,
   },
 ];

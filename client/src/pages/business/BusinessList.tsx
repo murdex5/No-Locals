@@ -2,68 +2,68 @@ import BusinessCard from "../../components/Business/BusinessCard";
 import MainLayout from "../../layouts/MainLayout";
 import { useEffect, useState } from "react";
 
-interface Business {
-  id: string;
-  name: string;
-  description: string;
-  location: string;
-  image: string;
-}
+const API_PATH = import.meta.env.VITE_API_PATH;
 
 const BusinessList = () => {
-  const [businesses, setBusinesses] = useState<Business[]>([]);
+  const [items, setItems] = useState([]);
+  const [dataIsLoaded, setDataIsLoaded] = useState(false);
+  const [error, setError] = useState(null); // Good practice to track errors
 
   useEffect(() => {
-    // Fetch businesses from API or use mock data
-    const mockBusinesses: Business[] = [
-      {
-        id: "1",
-        name: "Coffee House",
-        description: "Cozy cafe with great coffee",
-        location: "Downtown",
-        image: "https://via.placeholder.com/400x300?text=Coffee+House",
-      },
-      {
-        id: "2",
-        name: "Restaurant XYZ",
-        description: "Fine dining experience",
-        location: "Midtown",
-        image: "https://via.placeholder.com/400x300?text=Restaurant",
-      },
-      {
-        id: "3",
-        name: "Bar & Grill",
-        description: "Casual dining and drinks",
-        location: "Uptown",
-        image:
-          "https://ik.imagekit.io/usvtlkftj/Screenshot_2026-01-30_001214_8cdgVBT8Z.png",
-      },
-    ];
-
-    setBusinesses(mockBusinesses);
+    fetch(`${API_PATH}businesses`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
+      .then((json) => {
+        setItems(json);
+        setDataIsLoaded(true);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(err.message);
+        setDataIsLoaded(true);
+      });
   }, []);
-  return (
-    <>
+
+  if (!dataIsLoaded) {
+    return (
       <MainLayout>
-        <div className="py-8">
-          <h1 className="text-3xl font-bold mb-8">Businesses</h1>
+        <div className="py-8 text-center">
+          <h1 className="text-xl">Loading businesses...</h1>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  // 2. Handle Error State
+  if (error) {
+    return (
+      <MainLayout>
+        <div className="py-8 text-center text-red-500">
+          <p>Error: {error}</p>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  return (
+    <MainLayout>
+      <div className="py-8">
+        <h1 className="text-3xl font-bold mb-8">Businesses</h1>
+
+        {/* 3. Check items.length instead of businesses.length */}
+        {items.length === 0 ? (
+          <p className="text-gray-500">No businesses found.</p>
+        ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {businesses.map((business) => (
-              <BusinessCard
-                key={business.id}
-                id={business.id}
-                name={business.name}
-                description={business.description}
-                location={business.location}
-                image={business.image}
-              />
+            {items.map((business) => (
+              <BusinessCard key={business.id} {...business} />
             ))}
           </div>
-        </div>
-
-        {businesses.length == 0 && <p>No Businesses found</p>}
-      </MainLayout>
-    </>
+        )}
+      </div>
+    </MainLayout>
   );
 };
 
