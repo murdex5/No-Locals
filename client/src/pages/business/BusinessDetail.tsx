@@ -38,7 +38,7 @@ const BusinessDetail = () => {
         setError(err.message);
         setDataIsLoaded(true);
       });
-  }, []);
+  }, [id]);
 
   if (!dataIsLoaded) {
     return (
