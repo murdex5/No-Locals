@@ -1,13 +1,14 @@
 import BusinessCard from "../../components/Business/BusinessCard";
 import MainLayout from "../../layouts/MainLayout";
 import { useEffect, useState } from "react";
+import { Skeleton } from "@mui/material";
 
 const API_PATH = import.meta.env.VITE_API_PATH;
 
 const BusinessList = () => {
   const [items, setItems] = useState([]);
   const [dataIsLoaded, setDataIsLoaded] = useState(false);
-  const [error, setError] = useState(null); // Good practice to track errors
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch(`${API_PATH}businesses`)
@@ -30,7 +31,11 @@ const BusinessList = () => {
     return (
       <MainLayout>
         <div className="py-8 text-center">
-          <h1 className="text-xl">Loading businesses...</h1>
+          {/* <h1 className="text-xl">Loading businesses...</h1> */}
+          <Skeleton />
+          <Skeleton animation="wave" />
+          <Skeleton animation={false} />
+          <h1 className="py-8 text-2xl">Loading Businesses...</h1>
         </div>
       </MainLayout>
     );

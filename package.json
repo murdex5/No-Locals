@@ -12,8 +12,7 @@
     "eslint": "^10.2.1",
     "globals": "^17.5.0",
     "react-rating-stars-component": "^2.2.0",
-    "supertest": "^7.2.2",
-    "tailwindcss": "^4.3.0"
+    "supertest": "^7.2.2"
   },
   "scripts": {
     "start": "concurrently \"npm run start -w server\" \"npm run dev -w client\"",
