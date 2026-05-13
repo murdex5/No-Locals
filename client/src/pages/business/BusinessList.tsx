@@ -1,4 +1,6 @@
-import BusinessCard from "../../components/Business/BusinessCard";
+import BusinessCard, {
+  type BusinessCardProps,
+} from "../../components/Business/BusinessCard";
 import MainLayout from "../../layouts/MainLayout";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@mui/material";
@@ -6,9 +8,9 @@ import { Skeleton } from "@mui/material";
 const API_PATH = import.meta.env.VITE_API_PATH;
 
 const BusinessList = () => {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<BusinessCardProps[]>([]);
   const [dataIsLoaded, setDataIsLoaded] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch(`${API_PATH}businesses`)
@@ -16,7 +18,7 @@ const BusinessList = () => {
         if (!res.ok) throw new Error("Failed to fetch");
         return res.json();
       })
-      .then((json) => {
+      .then((json: BusinessCardProps[]) => {
         setItems(json);
         setDataIsLoaded(true);
       })
@@ -41,7 +43,6 @@ const BusinessList = () => {
     );
   }
 
-  // 2. Handle Error State
   if (error) {
     return (
       <MainLayout>
@@ -57,7 +58,6 @@ const BusinessList = () => {
       <div className="py-8">
         <h1 className="text-3xl font-bold mb-8">Businesses</h1>
 
-        {/* 3. Check items.length instead of businesses.length */}
         {items.length === 0 ? (
           <p className="text-gray-500">No businesses found.</p>
         ) : (
