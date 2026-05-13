@@ -5,19 +5,19 @@ import { useParams } from "react-router-dom";
 
 const API_PATH = import.meta.env.VITE_API_PATH;
 
-// interface BusinessProps {
-//   id: string;
-//   name: string;
-//   description: string;
-//   location: string;
-//   rating: number;
-//   image_url: string;
-//   user_id: string;
-// }
+interface BusinessProps {
+  id: string;
+  name: string;
+  description: string;
+  location: string;
+  rating: number;
+  image_url: string;
+  user_id: string;
+}
 
 const BusinessDetail = () => {
   const { id } = useParams();
-  const [business, setBusiness] = useState();
+  const [business, setBusiness] = useState<BusinessProps | null>(null);
   const [dataIsLoaded, setDataIsLoaded] = useState(false);
   const [error, setError] = useState(null);
 
@@ -59,6 +59,16 @@ const BusinessDetail = () => {
       <MainLayout>
         <div className="py-8 text-center text-red-500">
           <p>Error: {error}</p>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  if (!business) {
+    return (
+      <MainLayout>
+        <div className="py-8 text-center">
+          <p>Business not found</p>
         </div>
       </MainLayout>
     );
