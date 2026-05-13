@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import { motion, scale } from "framer-motion";
+import { motion } from "framer-motion";
+import BlackButton from "../components/Buttons/NavLink";
+import NavLink from "../components/Buttons/NavLink";
 
 const Home = () => {
   return (
@@ -24,12 +26,12 @@ const Home = () => {
                 is a website that helps locals to point out restaurants, hotels
                 or accommodations that do not serve locals.
               </p>
-              <Link
+              <NavLink
                 to="/report"
                 className="bg-black text-white px-8 py-3 rounded-full font-bold w-fit hover:bg-gray-800 transition"
               >
                 Report a business
-              </Link>
+              </NavLink>{" "}
             </section>
 
             {/* Right Section - Image */}

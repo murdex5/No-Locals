@@ -3,7 +3,6 @@ import BusinessCard, {
 } from "../../components/Business/BusinessCard";
 import LoadingCard from "../../components/LoadingCard";
 import MainLayout from "../../layouts/MainLayout";
-import { Skeleton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
 const API_PATH = import.meta.env.VITE_API_PATH;

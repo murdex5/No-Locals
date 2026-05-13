@@ -1,9 +1,9 @@
 import MainLayout from "../../layouts/MainLayout";
-import { Rating, Skeleton } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import LoadingCard from "../../components/LoadingCard";
+import { Rating } from "@mui/material";
 
 const API_PATH = import.meta.env.VITE_API_PATH;
 

@@ -36,7 +36,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       <nav className="bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
+          <Link to="/" className="shrink-0">
             <img
               src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777574904/No_Locals_1_lgu0n2.png"
               height="40"
@@ -154,7 +154,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       </nav>
 
       {/* Main Content Area */}
-      <main className="flex-grow max-w-7xl mx-auto w-full px-4 py-8">
+      <main className="grow max-w-7xl mx-auto w-full px-4 py-8">
         {children}
       </main>
 
@@ -165,7 +165,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-1 pb-8">
             {/* Left side - Logo and tagline */}
             <div>
-              <Link to="/" className="flex-shrink-0">
+              <Link to="/" className="shrink-0">
                 <img
                   src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777574904/No_Locals_1_lgu0n2.png"
                   height="25"
