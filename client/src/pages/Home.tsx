@@ -1,5 +1,5 @@
 import MainLayout from "../layouts/MainLayout";
-import { motion, scale } from "framer-motion";
+import { motion } from "framer-motion";
 import NavLink from "../components/Buttons/NavLink";
 
 const Home = () => {
