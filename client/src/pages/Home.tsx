@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 
 const Home = () => {
@@ -20,9 +21,12 @@ const Home = () => {
                 website that helps locals to point out restaurants, hotels or
                 accommodations that do not serve locals.
               </p>
-              <button className="bg-black text-white px-8 py-3 rounded-full font-bold w-fit hover:bg-gray-800 transition">
+              <Link
+                to="/report"
+                className="bg-black text-white px-8 py-3 rounded-full font-bold w-fit hover:bg-gray-800 transition"
+              >
                 Report a business
-              </button>
+              </Link>
             </section>
 
             {/* Right Section - Image */}

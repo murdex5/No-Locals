@@ -11,8 +11,8 @@
     "concurrently": "^9.2.1",
     "eslint": "^10.2.1",
     "globals": "^17.5.0",
-    "supertest": "^7.2.2",
-    "tailwindcss": "^4.3.0"
+    "react-rating-stars-component": "^2.2.0",
+    "supertest": "^7.2.2"
   },
   "scripts": {
     "start": "concurrently \"npm run start -w server\" \"npm run dev -w client\"",
@@ -27,7 +27,6 @@
     "client:build": "npm run build -w client"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.0",
     "axios": "^1.16.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
@@ -38,8 +37,6 @@
     "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.22.2",
     "pg": "^8.20.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
     "sharp": "^0.34.5"
   }
 }
