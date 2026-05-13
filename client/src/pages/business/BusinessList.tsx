@@ -6,9 +6,9 @@ import { Skeleton } from "@mui/material";
 const API_PATH = import.meta.env.VITE_API_PATH;
 
 const BusinessList = () => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<any[]>([]);
   const [dataIsLoaded, setDataIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch(`${API_PATH}businesses`)
