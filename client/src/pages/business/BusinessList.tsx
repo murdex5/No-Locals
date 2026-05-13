@@ -1,6 +1,7 @@
 import BusinessCard, {
   type BusinessCardProps,
 } from "../../components/Business/BusinessCard";
+import LoadingCard from "../../components/LoadingCard";
 import MainLayout from "../../layouts/MainLayout";
 import { Skeleton } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -27,12 +28,7 @@ const BusinessList = () => {
   if (isLoading) {
     return (
       <MainLayout>
-        <div className="py-8 text-center">
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-          <h1 className="py-8 text-2xl">Loading Businesses...</h1>
-        </div>
+        <LoadingCard />
       </MainLayout>
     );
   }

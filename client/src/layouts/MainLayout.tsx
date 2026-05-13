@@ -207,7 +207,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    to="/resources"
+                    to="https://github.com/murdex5/No-Locals/discussions/categories/announcements"
                     className="text-gray-400 hover:text-white text-sm transition"
                   >
                     Resources

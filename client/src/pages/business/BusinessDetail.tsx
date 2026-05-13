@@ -3,6 +3,7 @@ import { Rating, Skeleton } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
+import LoadingCard from "../../components/LoadingCard";
 
 const API_PATH = import.meta.env.VITE_API_PATH;
 
@@ -30,6 +31,7 @@ const BusinessDetail = () => {
       if (!res.ok) throw new Error("Failed to fetch business data");
       return res.json();
     },
+
     enabled: !!id,
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
@@ -37,13 +39,7 @@ const BusinessDetail = () => {
   if (isLoading) {
     return (
       <MainLayout>
-        <div className="py-8 text-center">
-          {/* <h1 className="text-xl">Loading businesses...</h1> */}
-          <Skeleton />
-          <Skeleton animation="wave" />
-          <Skeleton animation={false} />
-          <h1 className="py-8 text-2xl">Loading Business details...</h1>
-        </div>
+        <LoadingCard />
       </MainLayout>
     );
   }
