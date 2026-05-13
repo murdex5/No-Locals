@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Rating } from "@mui/material";
+import { motion } from "framer-motion";
 
 export interface BusinessCardProps {
   id: string;
@@ -20,8 +21,18 @@ const BusinessCard = ({
 }: BusinessCardProps) => {
   return (
     <Link to={`/b/${id}`} className="block">
-      <div className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition h-full">
-        <img src={image_url} alt={name} className="w-full h-48 object-cover" />
+      <motion.div
+        className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition h-full"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.4 }}
+      >
+        <img
+          src={image_url}
+          alt={name}
+          className="w-full h-48 object-cover"
+          loading="lazy"
+        />
         <div className="flex justify-between items-start p-4">
           <div className="flex-1">
             <h3 className="font-bold text-lg mb-2">{name}</h3>
@@ -32,7 +43,7 @@ const BusinessCard = ({
           </div>
           <Rating value={rating} readOnly size="medium" className="ml-4" />
         </div>
-      </div>
+      </motion.div>
     </Link>
   );
 };
