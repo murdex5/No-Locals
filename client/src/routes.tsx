@@ -6,6 +6,7 @@ import type { RouteObject } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import ReportBusiness from "./pages/business/ReportBusiness";
+import UserPage from "./pages/user/UserPage";
 
 export const routes: RouteObject[] = [
   {
@@ -39,5 +40,11 @@ export const routes: RouteObject[] = [
   {
     path: "/report",
     element: <ReportBusiness />,
+  },
+
+  // User
+  {
+    path: "/user/:id",
+    element: <UserPage />,
   },
 ];

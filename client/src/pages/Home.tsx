@@ -30,6 +30,7 @@ const Home = () => {
             {/* Right Section - Image */}
             <div className="flex-1 flex justify-end">
               <img
+                loading="lazy"
                 className="w-full max-w-sm h-auto object-cover rounded-3xl shadow-2xl"
                 src="https://res.cloudinary.com/dfeqksqvh/image/upload/v1777589936/IMG_0872_vwyw3z.jpg"
                 alt="main-image"

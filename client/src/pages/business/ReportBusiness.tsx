@@ -4,7 +4,9 @@ const ReportBusiness = () => {
   return (
     <>
       <MainLayout>
-        <p>Hello Report</p>
+        <div className="flex flex-wrap">
+          <h1>Report a business</h1>
+        </div>
       </MainLayout>
     </>
   );
