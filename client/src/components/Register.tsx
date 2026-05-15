@@ -29,6 +29,10 @@ const Register = () => {
         throw new Error(data.error || `Server Error: ${response.status}`);
       }
       navigate("/login");
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setFullName("");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -48,7 +52,12 @@ const Register = () => {
           >
             Username
           </label>
-          <input type="text" id="username" placeholder="username" />
+          <input
+            type="text"
+            id="username"
+            placeholder="username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </div>
         <div className="mb-4">
           <label
@@ -57,7 +66,12 @@ const Register = () => {
           >
             First Name
           </label>
-          <input type="text" id="firstName" placeholder="First Name" />
+          <input
+            type="text"
+            id="firstName"
+            placeholder="First Name"
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </div>
         <div className="mb-4">
           <label
@@ -66,7 +80,12 @@ const Register = () => {
           >
             Email
           </label>
-          <input type="email" id="email" placeholder="Email" />
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </div>
         <div className="mb-4">
           <label
@@ -75,7 +94,12 @@ const Register = () => {
           >
             Password
           </label>
-          <input type="password" id="password" placeholder="Password" />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            onChange={(e) => setUsername(e.target.value)}
+          />
           {error && <p className="text-red-500 text-xs italic">{error}</p>}
         </div>
         <div className="mb-4">
