@@ -27,40 +27,39 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4 
+        uses: actions/setup-node@v4
         with:
-          node-version: 22.x 
-          cache: 'npm'
-          cache-dependency-path: './package-lock.json'
+          node-version: 22.x
+          cache: "npm"
+          cache-dependency-path: "./package-lock.json"
 
-      - name: Install all dependencies
-        run: npm install
+      - name: Clean install dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install
 
       # --- LINTING ---
       - name: Lint Client
         run: npm run lint -w client
-      
+
       - name: Lint Server
         run: npm run lint -w server
 
       # --- BUILD STEP ---
-      # builds the client's static files.
       - name: Build Client
         run: npm run build -w client
 
       # --- TESTING ---
       - name: Run Server Tests
-        # The server tests run after the client has been built.
         run: npm test -w server
         env:
-          # This connects to the PostgreSQL service container running in the job.
           DATABASE_URL: postgres://postgres:password@localhost:5432/no_locals_test
           JWT_SECRET: super_secret_test_key
           NODE_ENV: test
-       
+
           IMAGEKIT_PUBLIC_KEY: ${{ secrets.IMAGEKIT_PUBLIC_KEY }}
           IMAGEKIT_PRIVATE_KEY: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
           IMAGEKIT_URL_ENDPOINT: ${{ secrets.IMAGEKIT_URL_ENDPOINT }}
