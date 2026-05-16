@@ -16,8 +16,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   const [username] = useState(() => localStorage.getItem("username") || "");
 
-  const [id] = useState(() => localStorage.getItem("id"));
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -64,7 +62,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
             {isLoggedIn ? (
               <div className="flex items-center gap-4">
-                <Link to={`/user/${id}`} className="text-sm text-gray-600">
+                <Link
+                  to={`/user/${username}`}
+                  className="text-sm text-gray-600"
+                >
                   Logged in as: <strong>{username}</strong>
                 </Link>
                 <button

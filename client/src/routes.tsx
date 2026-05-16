@@ -44,7 +44,7 @@ export const routes: RouteObject[] = [
 
   // User
   {
-    path: "/user/:id",
+    path: "/user/:username",
     element: <UserPage />,
   },
 ];

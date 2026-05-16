@@ -17,24 +17,24 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await fetch(`${API_PATH}/users/login`, {
-        method: "post",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || "Login failed");
+        throw new Error(data.error || "Login failed");
       }
 
-      const { token, username: returnedUsername, id } = await response.json();
+      const { token, username: returnedUsername, uid } = await response.json();
 
       console.log("Username:", returnedUsername);
 
       localStorage.setItem("token", token);
       localStorage.setItem("username", returnedUsername);
-      localStorage.setItem("id", id);
+      localStorage.setItem("uid", uid);
 
-      naviagate("/businesses");
+      naviagate(`/user/${returnedUsername}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {

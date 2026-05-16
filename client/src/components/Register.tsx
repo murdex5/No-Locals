@@ -14,6 +14,22 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (
+      !username.trim() ||
+      !email.trim() ||
+      !password.trim() ||
+      !fullName.trim()
+    ) {
+      setError("All fields are required");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
     setError("");
     setLoading(true);
     try {

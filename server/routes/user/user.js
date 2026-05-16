@@ -11,12 +11,10 @@ const router = express.Router();
 
 router.get('/:username', async (req, res) => {
     const { username } = req.params;
-
     const sql = 'SELECT * FROM users WHERE username = $1';
-
+    
     try {
         const { rows } = await db.query(sql, [username]);
-
         if (rows.length === 0) {
             return res.status(404).json({ message: "User not found"});
         }
@@ -63,18 +61,18 @@ router.post('/login', async (req, res) => {
     try {
         const { rows } = await db.query('SELECT * FROM users WHERE username = $1', [username]);
 
-        if (rows.length == 0) return res.status(401).json({ error: 'Invalud credntials'});
+        if (rows.length == 0) return res.status(401).json({ error: 'Invalid credentials'});
 
         const user = rows[0];
         const match = await bcrypt.compare(password, user.password);
         if (!match) return res.status(401).json({ error: 'Invalid credentials'});
 
         const token = jwt.sign(
-            { id: user.id, username: user.username },
+            { uid: user.uid, username: user.username },
             process.env.JWT_SECRET,
             { expiresIn: '7d'}
         );
-        res.json({ token, username: user.username, id: user.id});
+        res.json({ token, username: user.username, uid: user.uid });
     } catch (err) {
         console.error("Login Error:", err.message);
         res.status(500).json({ error: err.message });

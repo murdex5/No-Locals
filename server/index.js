@@ -40,7 +40,7 @@ app.use('/reviews', reviewRoutes);
 
 // Global Error Handler
 app.use((err, req, res, _next) => {
-  console.error('🚨 GLOBAL ERROR HANDLER:', err);
+  console.error('GLOBAL ERROR HANDLER:', err);
   res.status(500).json({ error: err.message });
 });
 
