@@ -27,7 +27,7 @@ const BusinessDetail = () => {
   } = useQuery({
     queryKey: ["business", id],
     queryFn: async () => {
-      const res = await fetch(`${API_PATH}businesses/${id}`);
+      const res = await fetch(`${API_PATH}/businesses/${id}`);
       if (!res.ok) throw new Error("Failed to fetch business data");
       return res.json();
     },

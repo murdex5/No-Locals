@@ -62,9 +62,12 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
             {isLoggedIn ? (
               <div className="flex items-center gap-4">
-                <span className="text-sm text-gray-600">
+                <Link
+                  to={`/user/${username}`}
+                  className="text-sm text-gray-600"
+                >
                   Logged in as: <strong>{username}</strong>
-                </span>
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="px-4 py-2 bg-black text-white text-sm font-semibold rounded hover:bg-gray-800 transition"
@@ -74,10 +77,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
               </div>
             ) : (
               <Link
-                to="/register"
+                to="/login"
                 className="text-gray-700 hover:text-black font-medium transition"
               >
-                Register
+                Login
               </Link>
             )}
           </div>

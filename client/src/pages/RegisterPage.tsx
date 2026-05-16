@@ -1,9 +1,12 @@
+import Register from "../components/Register";
 import MainLayout from "../layouts/MainLayout";
 
 const RegisterPage = () => {
   return (
     <MainLayout>
-      <p>Hello Retgister</p>
+      <div>
+        <Register />
+      </div>
     </MainLayout>
   );
 };
